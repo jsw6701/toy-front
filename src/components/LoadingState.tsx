@@ -11,13 +11,13 @@ const LoadingState = () => {
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <div className="post-card-content">
-            <div className="h-5 bg-secondary rounded-full w-3/4 mb-4"></div>
-            <div className="h-4 bg-secondary rounded-full w-full mb-2"></div>
-            <div className="h-4 bg-secondary rounded-full w-5/6 mb-2"></div>
-            <div className="h-4 bg-secondary rounded-full w-3/4 mb-6"></div>
+            <div className="h-5 bg-post-darker rounded-full w-3/4 mb-4"></div>
+            <div className="h-4 bg-post-darker rounded-full w-full mb-2"></div>
+            <div className="h-4 bg-post-darker rounded-full w-5/6 mb-2"></div>
+            <div className="h-4 bg-post-darker rounded-full w-3/4 mb-6"></div>
             <div className="flex justify-between items-center">
-              <div className="h-3 bg-secondary rounded-full w-1/4"></div>
-              <div className="h-3 bg-secondary rounded-full w-1/6 rounded-full"></div>
+              <div className="h-3 bg-post-darker rounded-full w-1/4"></div>
+              <div className="h-3 bg-post-darker rounded-full w-1/6 rounded-full"></div>
             </div>
           </div>
         </div>

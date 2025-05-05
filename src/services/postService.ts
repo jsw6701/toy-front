@@ -1,5 +1,6 @@
 
 import { ApiResponse, DetailResponse, PagingResponse, Post } from "@/types/post";
+import { toast } from "@/components/ui/sonner";
 
 export const fetchPosts = async (
   pageNo: number = 1,
@@ -26,6 +27,9 @@ export const fetchPosts = async (
     return data.data.result;
   } catch (error) {
     console.error("Error fetching posts:", error);
+    toast.error("포스트를 불러오는데 실패했습니다.", {
+      position: "bottom-right",
+    });
     // Return empty response on error
     return {
       resultList: [],
@@ -39,13 +43,18 @@ export const fetchPosts = async (
 
 export const fetchPostDetail = async (postId: number): Promise<Post> => {
   try {
+    const requestBody = {
+      postId: postId
+    };
+    
     const response = await fetch(
-        `http://localhost:8080/api/v1/post/detail?postId=${postId}`,
+        `http://localhost:8080/api/v1/post/detail`,
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
-          }
+          },
+          body: JSON.stringify(requestBody)
         }
     );
 
@@ -57,6 +66,9 @@ export const fetchPostDetail = async (postId: number): Promise<Post> => {
     return data.data.result.result;
   } catch (error) {
     console.error("Error fetching post detail:", error);
+    toast.error("포스트 상세 정보를 불러오는데 실패했습니다.", {
+      position: "bottom-right",
+    });
     throw error;
   }
 };

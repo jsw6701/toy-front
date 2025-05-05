@@ -2,17 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { ArrowLeft, Clock, User } from "lucide-react";
+import { ArrowLeft, Clock, User, Power } from "lucide-react";
 import { fetchPostDetail } from "@/services/postService";
 import { Post } from "@/types/post";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/sonner";
 
 const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
+  const { toast: uiToast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,9 +25,13 @@ const PostDetail: React.FC = () => {
         const postId = parseInt(id, 10);
         const data = await fetchPostDetail(postId);
         setPost(data);
+        toast("포스트 로드 완료", {
+          description: "포스트 상세 내용을 불러왔습니다.",
+          position: "bottom-right"
+        });
       } catch (error) {
         console.error("Failed to load post detail:", error);
-        toast({
+        uiToast({
           title: "Error",
           description: "Failed to load post details. Please try again later.",
           variant: "destructive",
@@ -37,7 +42,7 @@ const PostDetail: React.FC = () => {
     };
 
     loadPostDetail();
-  }, [id, toast]);
+  }, [id, uiToast]);
 
   const formatDate = (dateString: string) => {
     try {
@@ -50,14 +55,15 @@ const PostDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center bg-post-dark relative">
+        <div className="absolute inset-0 grid-bg opacity-20"></div>
         <div className="animate-pulse space-y-8 max-w-3xl w-full">
-          <div className="h-10 bg-secondary rounded-full w-3/6 mx-auto"></div>
-          <div className="h-64 bg-secondary rounded-xl w-full"></div>
+          <div className="h-10 bg-post-darker rounded-full w-3/6 mx-auto"></div>
+          <div className="h-64 bg-post-darker rounded-xl w-full"></div>
           <div className="space-y-4">
-            <div className="h-4 bg-secondary rounded-full w-full"></div>
-            <div className="h-4 bg-secondary rounded-full w-5/6"></div>
-            <div className="h-4 bg-secondary rounded-full w-4/6"></div>
+            <div className="h-4 bg-post-darker rounded-full w-full"></div>
+            <div className="h-4 bg-post-darker rounded-full w-5/6"></div>
+            <div className="h-4 bg-post-darker rounded-full w-4/6"></div>
           </div>
         </div>
       </div>
@@ -66,11 +72,12 @@ const PostDetail: React.FC = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-        <h2 className="text-2xl font-bold">Post not found</h2>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-post-dark relative">
+        <div className="absolute inset-0 grid-bg opacity-20"></div>
+        <h2 className="text-2xl font-bold text-white">Post not found</h2>
         <p className="text-muted-foreground">The post you're looking for doesn't exist or has been removed.</p>
         <Button 
-          className="mt-6 flex items-center gap-2"
+          className="mt-6 flex items-center gap-2 bg-post-yellow text-post-dark hover:bg-post-yellow/90"
           onClick={() => navigate("/posts")}
         >
           <ArrowLeft size={16} />
@@ -81,11 +88,22 @@ const PostDetail: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container max-w-4xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-post-dark relative">
+      <div className="absolute inset-0 grid-bg opacity-20"></div>
+      
+      <div className="absolute top-5 right-5 md:top-10 md:right-10">
+        <button 
+          className="animated-button w-10 h-10 md:w-12 md:h-12"
+          onClick={() => navigate("/posts")}
+        >
+          <Power className="w-5 h-5 md:w-6 md:h-6 text-post-dark" />
+        </button>
+      </div>
+      
+      <div className="container max-w-4xl mx-auto px-4 py-12 relative z-10">
         <Button 
           variant="ghost" 
-          className="flex items-center gap-2 mb-8 hover:bg-secondary/80"
+          className="flex items-center gap-2 mb-8 hover:bg-post-darker/80 text-white"
           onClick={() => navigate("/posts")}
         >
           <ArrowLeft size={16} />
@@ -93,8 +111,8 @@ const PostDetail: React.FC = () => {
         </Button>
         
         <div className="animate-fade-in space-y-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-post-violet to-post-blue bg-clip-text text-transparent">
-            {post.title}
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+            <span className="text-post-yellow neon-text">{post.title}</span>
           </h1>
           
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
@@ -108,9 +126,9 @@ const PostDetail: React.FC = () => {
             </div>
           </div>
           
-          <div className="w-full h-[2px] bg-gradient-to-r from-post-violet to-post-blue opacity-50 my-8"></div>
+          <div className="w-full h-[2px] bg-gradient-post opacity-50 my-8"></div>
           
-          <article className="prose prose-lg max-w-none">
+          <article className="card-border p-8 rounded-xl shadow-md animate-scale-in">
             <p className="text-foreground leading-relaxed">
               {post.content}
             </p>
