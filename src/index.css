@@ -50,6 +50,23 @@
   ::selection {
     @apply bg-primary/20 text-foreground;
   }
+  
+  /* Add styles for scrollbars in the expanding card */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-post-darker;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-post-blue/50 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-post-blue/70;
+  }
 }
 
 @layer components {
@@ -112,6 +129,15 @@
 
   .card-border {
     @apply border border-[#324da0]/20 bg-post-darker;
+  }
+  
+  /* New styles for the expanding effect */
+  .expand-card {
+    @apply fixed z-50 transition-all duration-500 ease-out overflow-hidden;
+  }
+  
+  .card-content-reveal {
+    @apply transition-opacity duration-300 delay-200;
   }
 }
 
@@ -207,4 +233,23 @@
 
 .glow-effect:hover::after {
   opacity: 0.2;
+}
+
+/* Expanding card animation */
+@keyframes expandCard {
+  0% {
+    width: var(--initial-width);
+    height: var(--initial-height);
+    transform: translate(0, 0);
+  }
+  100% {
+    width: 90vw;
+    height: 80vh;
+    max-width: 1200px;
+    transform: translate(var(--x-offset), var(--y-offset));
+  }
+}
+
+.shadow-button {
+  box-shadow: 0 0 15px rgba(255, 185, 33, 0.5);
 }
