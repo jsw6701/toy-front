@@ -126,6 +126,11 @@
   .bg-gradient-post {
     @apply bg-gradient-to-br from-post-violet to-post-blue;
   }
+  
+  .power-button {
+    animation: pulse 2s infinite ease-in-out;
+    box-shadow: 0 0 20px rgba(255, 185, 33, 0.5);
+  }
 }
 
 @keyframes shimmer {
@@ -151,6 +156,17 @@
   }
   50% {
     transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 185, 33, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 185, 33, 0.7);
   }
 }
 

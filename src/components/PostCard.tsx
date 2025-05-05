@@ -3,12 +3,15 @@ import { Post } from "@/types/post";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface PostCardProps {
   post: Post;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const navigate = useNavigate();
+  
   // Format the date for display
   const formatDate = (dateString: string) => {
     try {
@@ -19,8 +22,15 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     }
   };
 
+  const handleClick = () => {
+    navigate(`/post/${post.id}`);
+  };
+
   return (
-    <div className="post-card group">
+    <div 
+      className="post-card group cursor-pointer" 
+      onClick={handleClick}
+    >
       <div className="post-card-content relative overflow-hidden">
         <div className="mb-4 opacity-80 text-xs font-medium tracking-wider uppercase">
           {post.creatorCd}

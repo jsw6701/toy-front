@@ -18,6 +18,10 @@ export interface PagingResponse<T> {
   lastPageNo: number;
 }
 
+export interface DetailResponse<T> {
+  result: T;
+}
+
 export interface ApiResponse<T> {
   message: string;
   timestamp: number;

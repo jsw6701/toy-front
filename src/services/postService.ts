@@ -1,5 +1,5 @@
 
-import { ApiResponse, PagingResponse, Post } from "@/types/post";
+import { ApiResponse, DetailResponse, PagingResponse, Post } from "@/types/post";
 
 export const fetchPosts = async (
   pageNo: number = 1,
@@ -34,5 +34,30 @@ export const fetchPosts = async (
       firstPageNo: 1,
       lastPageNo: 1,
     };
+  }
+};
+
+export const fetchPostDetail = async (postId: number): Promise<Post> => {
+  try {
+    const response = await fetch(
+      "http://localhost:8080/api/v1/post/detail",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ postId }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch post detail: ${response.status}`);
+    }
+
+    const data: ApiResponse<DetailResponse<Post>> = await response.json();
+    return data.data.result.result;
+  } catch (error) {
+    console.error("Error fetching post detail:", error);
+    throw error;
   }
 };
