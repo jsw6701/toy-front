@@ -1,0 +1,35 @@
+
+import React from "react";
+import { Post } from "@/types/post";
+import PostCard from "./PostCard";
+import LoadingState from "./LoadingState";
+
+interface PostGridProps {
+  posts: Post[];
+  isLoading: boolean;
+}
+
+const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading }) => {
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (posts.length === 0) {
+    return (
+      <div className="py-20 text-center">
+        <h3 className="text-xl text-muted-foreground">No posts found</h3>
+        <p className="mt-2">Try changing your search criteria or check back later</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
+    </div>
+  );
+};
+
+export default PostGrid;
