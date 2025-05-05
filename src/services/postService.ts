@@ -42,7 +42,7 @@ export const fetchPostDetail = async (postId: number): Promise<Post> => {
     const response = await fetch(
       "http://localhost:8080/api/v1/post/detail",
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
