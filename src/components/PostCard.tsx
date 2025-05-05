@@ -2,6 +2,7 @@
 import { Post } from "@/types/post";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
+import { ArrowRight } from "lucide-react";
 
 interface PostCardProps {
   post: Post;
@@ -19,18 +20,24 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <div className="post-card animate-fade-in">
-      <div className="post-card-content">
-        <h3 className="post-title">{post.title}</h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+    <div className="post-card group">
+      <div className="post-card-content relative overflow-hidden">
+        <div className="mb-4 opacity-80 text-xs font-medium tracking-wider uppercase">
+          {post.creatorCd}
+        </div>
+        <h3 className="post-title text-xl font-medium transition-all duration-300 group-hover:text-primary">
+          {post.title}
+        </h3>
+        <p className="text-sm text-muted-foreground mb-6 line-clamp-3 transition-all duration-300">
           {post.content}
         </p>
         <div className="flex justify-between items-center">
           <span className="post-date">{formatDate(post.createdAt)}</span>
-          <div className="bg-secondary py-1 px-3 rounded-full text-xs">
-            {post.creatorCd}
-          </div>
+          <span className="text-primary opacity-0 transform translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+            <ArrowRight size={18} />
+          </span>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none dark:from-background/0 dark:via-background/0 dark:to-background/10"></div>
       </div>
     </div>
   );

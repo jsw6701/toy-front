@@ -24,9 +24,15 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:grid-masonry">
+      {posts.map((post, index) => (
+        <div 
+          key={post.id} 
+          className="animate-fade-in"
+          style={{ animationDelay: `${index * 0.05}s` }}
+        >
+          <PostCard post={post} />
+        </div>
       ))}
     </div>
   );
