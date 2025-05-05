@@ -9,6 +9,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
 
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
 
 const App = () => (
