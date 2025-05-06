@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { deletePost, PostDeleteRequestDto } from "@/services/postService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/sonner";
-import { trash2 as TrashIcon } from "lucide-react";
+import { Trash2 as TrashIcon } from "lucide-react";
 
 interface DeletePostButtonProps {
   postId: number;
