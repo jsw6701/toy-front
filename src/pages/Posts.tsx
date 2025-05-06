@@ -7,13 +7,16 @@ import PostGrid from "@/components/PostGrid";
 import Pagination from "@/components/Pagination";
 import { useToast } from "@/hooks/use-toast";
 import { toast } from "@/components/ui/sonner";
-import { Power } from "lucide-react";
+import { Power, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Posts: React.FC = () => {
   const [postsData, setPostsData] = useState<PagingResponse<Post> | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { toast: uiToast } = useToast();
+  const navigate = useNavigate();
   
   const postsPerPage = 9;
 
@@ -70,16 +73,25 @@ const Posts: React.FC = () => {
         <div className="pb-4 mb-6 border-b border-[#324da0]/30">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-medium text-white neon-text-blue">Latest Posts</h2>
-            <div className="text-sm text-muted-foreground">
-              {postsData ? (
-                <span>
-                  Showing{" "}
-                  <span className="font-medium text-post-yellow neon-text">{postsData.resultList.length}</span> of{" "}
-                  <span className="font-medium text-post-yellow neon-text">{postsData.totalCount}</span> posts
-                </span>
-              ) : (
-                <span>&nbsp;</span>
-              )}
+            <div className="flex items-center gap-4">
+              <Button 
+                className="bg-post-yellow text-post-dark hover:bg-post-yellow/90 flex items-center gap-2"
+                onClick={() => navigate("/post/create")}
+              >
+                <Plus className="w-4 h-4" />
+                New Post
+              </Button>
+              <div className="text-sm text-muted-foreground">
+                {postsData ? (
+                  <span>
+                    Showing{" "}
+                    <span className="font-medium text-post-yellow neon-text">{postsData.resultList.length}</span> of{" "}
+                    <span className="font-medium text-post-yellow neon-text">{postsData.totalCount}</span> posts
+                  </span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
+              </div>
             </div>
           </div>
         </div>

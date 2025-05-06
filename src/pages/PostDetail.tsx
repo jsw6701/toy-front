@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { ArrowLeft, Clock, User, Power } from "lucide-react";
+import { ArrowLeft, Clock, User, Power, Edit } from "lucide-react";
 import { fetchPostDetail } from "@/services/postService";
 import { Post } from "@/types/post";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
+import DeletePostButton from "@/components/DeletePostButton";
 
 const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -118,12 +119,24 @@ const PostDetail: React.FC = () => {
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <User size={14} />
-              <span>{post.creatorCd}</span>
+              <span>{post.creatorCd || "Unknown"}</span>
             </div>
             <div className="flex items-center gap-1">
               <Clock size={14} />
-              <span>{formatDate(post.createdAt)}</span>
+              <span>{post.createdAt ? formatDate(post.createdAt) : "Unknown date"}</span>
             </div>
+          </div>
+          
+          <div className="flex gap-4">
+            <Button 
+              onClick={() => navigate(`/post/edit/${post.id}`)}
+              className="bg-post-blue text-white hover:bg-post-blue/80"
+            >
+              <Edit className="w-4 h-4 mr-2" />
+              Edit Post
+            </Button>
+            
+            <DeletePostButton postId={post.id} />
           </div>
           
           <div className="w-full h-[2px] bg-gradient-post opacity-50 my-8"></div>
