@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { PagingResponse, Post } from "@/types/post";
 import { fetchPosts, fetchPostDetail } from "@/services/postService";
@@ -11,6 +10,7 @@ import { Power, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import TabPostView from "@/components/TabPostView";
+import MainLayout from "@/components/MainLayout";
 
 const Posts: React.FC = () => {
   const [postsData, setPostsData] = useState<PagingResponse<Post> | null>(null);
@@ -125,72 +125,74 @@ const Posts: React.FC = () => {
     : 0;
 
   return (
-    <div className="min-h-screen pb-16 bg-post-dark overflow-hidden relative perspective-1000">
-      <div className="absolute inset-0 grid-bg opacity-20 rotate-3d"></div>
-      
-      <div className="absolute top-5 right-5 md:top-10 md:right-10">
-        <button className="animated-button w-10 h-10 md:w-12 md:h-12 z-10 transform hover:rotate-12 transition-all duration-300">
-          <Power className="w-5 h-5 md:w-6 md:h-6 text-post-dark" />
-        </button>
-      </div>
-      
-      <Header />
-      
-      <main className="container mx-auto px-4 relative z-10 transform-style-3d">
-        <div className="pb-4 mb-6 border-b border-[#324da0]/30 hover:border-[#324da0]/60 transition-all duration-300">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-medium text-white neon-text-blue">Latest Posts</h2>
-            <div className="flex items-center gap-4">
-              <Button 
-                className="bg-post-yellow text-post-dark hover:bg-post-yellow/90 flex items-center gap-2 shadow-[0_0_15px_rgba(255,185,33,0.3)] hover:shadow-[0_0_20px_rgba(255,185,33,0.5)] transform transition-all duration-300"
-                onClick={() => navigate("/post/create")}
-              >
-                <Plus className="w-4 h-4" />
-                New Post
-              </Button>
-              <div className="text-sm text-muted-foreground">
-                {postsData ? (
-                  <span>
-                    Showing{" "}
-                    <span className="font-medium text-post-yellow neon-text">{postsData.resultList.length}</span> of{" "}
-                    <span className="font-medium text-post-yellow neon-text">{postsData.totalCount}</span> posts
-                  </span>
-                ) : (
-                  <span>&nbsp;</span>
-                )}
+    <MainLayout>
+      <div className="min-h-screen pb-16 relative perspective-1000">
+        <div className="absolute inset-0 grid-bg opacity-20 rotate-3d"></div>
+        
+        <div className="absolute top-5 right-5 md:top-10 md:right-10">
+          <button className="animated-button w-10 h-10 md:w-12 md:h-12 z-10 transform hover:rotate-12 transition-all duration-300">
+            <Power className="w-5 h-5 md:w-6 md:h-6 text-post-dark" />
+          </button>
+        </div>
+        
+        <Header />
+        
+        <main className="container mx-auto px-4 relative z-10 transform-style-3d">
+          <div className="pb-4 mb-6 border-b border-[#324da0]/30 hover:border-[#324da0]/60 transition-all duration-300">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-medium text-white neon-text-blue">Latest Posts</h2>
+              <div className="flex items-center gap-4">
+                <Button 
+                  className="bg-post-yellow text-post-dark hover:bg-post-yellow/90 flex items-center gap-2 shadow-[0_0_15px_rgba(255,185,33,0.3)] hover:shadow-[0_0_20px_rgba(255,185,33,0.5)] transform transition-all duration-300"
+                  onClick={() => navigate("/post/create")}
+                >
+                  <Plus className="w-4 h-4" />
+                  New Post
+                </Button>
+                <div className="text-sm text-muted-foreground">
+                  {postsData ? (
+                    <span>
+                      Showing{" "}
+                      <span className="font-medium text-post-yellow neon-text">{postsData.resultList.length}</span> of{" "}
+                      <span className="font-medium text-post-yellow neon-text">{postsData.totalCount}</span> posts
+                    </span>
+                  ) : (
+                    <span>&nbsp;</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <TabPostView 
-          openPosts={openPosts}
-          activePostId={activePostId}
-          onTabChange={handleTabChange}
-          onCloseTab={handleCloseTab}
-          onPostDeleted={refreshPosts}
-        />
-        
-        {(!activePostId || activePostId === null) && (
-          <PostGrid
-            posts={postsData?.resultList || []}
-            isLoading={isLoading}
+          
+          <TabPostView 
+            openPosts={openPosts}
+            activePostId={activePostId}
+            onTabChange={handleTabChange}
+            onCloseTab={handleCloseTab}
             onPostDeleted={refreshPosts}
-            onPostClick={handlePostClick}
           />
-        )}
-        
-        {postsData && postsData.totalCount > 0 && !activePostId && (
-          <div className="mt-12">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
+          
+          {(!activePostId || activePostId === null) && (
+            <PostGrid
+              posts={postsData?.resultList || []}
+              isLoading={isLoading}
+              onPostDeleted={refreshPosts}
+              onPostClick={handlePostClick}
             />
-          </div>
-        )}
-      </main>
-    </div>
+          )}
+          
+          {postsData && postsData.totalCount > 0 && !activePostId && (
+            <div className="mt-12">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+    </MainLayout>
   );
 };
 

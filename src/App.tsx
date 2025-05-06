@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WelcomeScreen from "./components/WelcomeScreen";
 import Posts from "./pages/Posts";
+import Index from "./pages/Index"; 
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<WelcomeScreen />} />
           <Route path="/posts" element={<Posts />} />
+          <Route path="/index" element={<Index />} />
           <Route path="/post/:id" element={<PostDetail />} />
           <Route path="/post/create" element={<CreatePost />} />
           <Route path="/post/edit/:id" element={<EditPost />} />
