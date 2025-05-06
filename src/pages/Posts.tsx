@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { PagingResponse, Post } from "@/types/post";
-import { fetchPosts } from "@/services/postService";
+import { fetchPosts, fetchPostDetail } from "@/services/postService";
 import Header from "@/components/Header";
 import PostGrid from "@/components/PostGrid";
 import Pagination from "@/components/Pagination";
@@ -10,11 +10,14 @@ import { toast } from "@/components/ui/sonner";
 import { Power, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import TabPostView from "@/components/TabPostView";
 
 const Posts: React.FC = () => {
   const [postsData, setPostsData] = useState<PagingResponse<Post> | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [openPosts, setOpenPosts] = useState<Post[]>([]);
+  const [activePostId, setActivePostId] = useState<number | null>(null);
   const { toast: uiToast } = useToast();
   const navigate = useNavigate();
   
@@ -29,6 +32,20 @@ const Posts: React.FC = () => {
         description: "최신 게시글을 불러왔습니다.",
         position: "bottom-right"
       });
+
+      // Update openPosts if any were deleted
+      setOpenPosts(prevOpenPosts => {
+        const updatedOpenPosts = prevOpenPosts.filter(openPost => 
+          data.resultList.some(post => post.id === openPost.id)
+        );
+        return updatedOpenPosts;
+      });
+      
+      // If the active post was deleted, set activePostId to the last open post or null
+      if (activePostId && !data.resultList.some(post => post.id === activePostId)) {
+        const lastOpenPost = openPosts.at(-1);
+        setActivePostId(lastOpenPost?.id || null);
+      }
     } catch (error) {
       console.error("Failed to refresh posts:", error);
     }
@@ -65,6 +82,42 @@ const Posts: React.FC = () => {
       top: 0,
       behavior: "smooth",
     });
+  };
+
+  const handlePostClick = async (post: Post) => {
+    // Check if the post is already open in a tab
+    if (openPosts.some(p => p.id === post.id)) {
+      setActivePostId(post.id);
+      return;
+    }
+
+    try {
+      // Fetch full post details
+      const postDetail = await fetchPostDetail(post.id);
+      
+      // Add the post to open tabs and set it as active
+      setOpenPosts(prev => [...prev, postDetail]);
+      setActivePostId(post.id);
+    } catch (error) {
+      console.error("Failed to fetch post details:", error);
+      toast.error("포스트 상세 정보를 불러오는데 실패했습니다.", {
+        position: "bottom-right"
+      });
+    }
+  };
+
+  const handleTabChange = (postId: number | null) => {
+    setActivePostId(postId);
+  };
+
+  const handleCloseTab = (postId: number) => {
+    setOpenPosts(prev => prev.filter(p => p.id !== postId));
+    
+    // If we're closing the active tab, set the last tab as active
+    if (activePostId === postId) {
+      const remainingPosts = openPosts.filter(p => p.id !== postId);
+      setActivePostId(remainingPosts.length > 0 ? remainingPosts[remainingPosts.length - 1].id : null);
+    }
   };
 
   const totalPages = postsData
@@ -110,13 +163,24 @@ const Posts: React.FC = () => {
           </div>
         </div>
         
-        <PostGrid
-          posts={postsData?.resultList || []}
-          isLoading={isLoading}
+        <TabPostView 
+          openPosts={openPosts}
+          activePostId={activePostId}
+          onTabChange={handleTabChange}
+          onCloseTab={handleCloseTab}
           onPostDeleted={refreshPosts}
         />
         
-        {postsData && postsData.totalCount > 0 && (
+        {(!activePostId || activePostId === null) && (
+          <PostGrid
+            posts={postsData?.resultList || []}
+            isLoading={isLoading}
+            onPostDeleted={refreshPosts}
+            onPostClick={handlePostClick}
+          />
+        )}
+        
+        {postsData && postsData.totalCount > 0 && !activePostId && (
           <div className="mt-12">
             <Pagination
               currentPage={currentPage}

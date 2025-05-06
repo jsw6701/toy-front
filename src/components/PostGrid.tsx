@@ -8,9 +8,10 @@ interface PostGridProps {
   posts: Post[];
   isLoading: boolean;
   onPostDeleted?: () => void;
+  onPostClick: (post: Post) => void;
 }
 
-const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading, onPostDeleted }) => {
+const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading, onPostDeleted, onPostClick }) => {
   if (isLoading) {
     return <LoadingState />;
   }
@@ -39,6 +40,7 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading, onPostDeleted }) 
           <PostCard 
             post={post} 
             onPostDeleted={onPostDeleted}
+            onPostClick={onPostClick}
           />
         </div>
       ))}

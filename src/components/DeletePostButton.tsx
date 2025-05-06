@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { deletePost, PostDeleteRequestDto } from "@/services/postService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/sonner";
-import { Trash2 as TrashIcon } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 interface DeletePostButtonProps {
   postId: number;
@@ -63,7 +63,7 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, onSuccess }
           variant="outline" 
           className="relative overflow-hidden border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 transform transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,0,0.5)] z-10 before:content-[''] before:absolute before:-z-10 before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:to-red-500/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
         >
-          <TrashIcon className="w-4 h-4 mr-2" />
+          <Trash2 className="w-4 h-4 mr-2" />
           Delete Post
         </Button>
       </AlertDialogTrigger>

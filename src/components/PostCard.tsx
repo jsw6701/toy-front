@@ -10,9 +10,10 @@ import DeletePostButton from "./DeletePostButton";
 interface PostCardProps {
   post: Post;
   onPostDeleted?: () => void;
+  onPostClick: (post: Post) => void;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted, onPostClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
@@ -27,12 +28,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted }) => {
     }
   };
 
-  const handleClick = () => {
-    setIsExpanded(true);
-  };
-
-  const handleClose = () => {
-    setIsExpanded(false);
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onPostClick(post);
   };
 
   const handleEdit = (e: React.MouseEvent) => {
@@ -91,12 +89,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted }) => {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-post-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
         </div>
       </div>
-
-      <ExpandingCard 
-        post={post} 
-        isOpen={isExpanded} 
-        onClose={handleClose} 
-      />
     </>
   );
 };
