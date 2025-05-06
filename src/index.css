@@ -139,6 +139,63 @@
   .card-content-reveal {
     @apply transition-opacity duration-300 delay-200;
   }
+  
+  /* New 3D Effect Classes */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .translate-z-1 {
+    transform: translateZ(1px);
+  }
+  
+  .translate-z-2 {
+    transform: translateZ(2px);
+  }
+  
+  .translate-z-3 {
+    transform: translateZ(3px);
+  }
+  
+  .translate-z-5 {
+    transform: translateZ(5px);
+  }
+  
+  .translate-z-10 {
+    transform: translateZ(10px);
+  }
+  
+  .translate-z-15 {
+    transform: translateZ(15px);
+  }
+  
+  .translate-z-20 {
+    transform: translateZ(20px);
+  }
+  
+  .translate-z-25 {
+    transform: translateZ(25px);
+  }
+  
+  .rotate-3d {
+    transform: rotate3d(1, 1, 0, 2deg);
+  }
+  
+  .rotate-y-3 {
+    transform: rotateY(3deg);
+  }
+  
+  .rotate-y-6 {
+    transform: rotateY(6deg);
+  }
+  
+  .rotate-x-3 {
+    transform: rotateX(3deg);
+  }
 }
 
 @keyframes shimmer {

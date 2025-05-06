@@ -37,6 +37,10 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, onSuccess }
       
       await deletePost(deleteData);
       
+      toast.success("게시글이 성공적으로 삭제되었습니다.", {
+        position: "bottom-right",
+      });
+      
       if (onSuccess) {
         onSuccess();
       } else {
@@ -44,6 +48,9 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, onSuccess }
       }
     } catch (error) {
       console.error("Error deleting post:", error);
+      toast.error("게시글 삭제에 실패했습니다.", {
+        position: "bottom-right",
+      });
     } finally {
       setIsDeleting(false);
     }
@@ -54,27 +61,27 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, onSuccess }
       <AlertDialogTrigger asChild>
         <Button 
           variant="outline" 
-          className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+          className="relative overflow-hidden border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 transform transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,0,0.5)] z-10 before:content-[''] before:absolute before:-z-10 before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:to-red-500/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
         >
           <TrashIcon className="w-4 h-4 mr-2" />
           Delete Post
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-post-darker border-post-blue/30">
+      <AlertDialogContent className="bg-post-darker border-post-blue/30 shadow-[0_0_25px_rgba(30,174,219,0.3)] transform transition-all">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-white">Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle className="text-white text-xl">Are you sure?</AlertDialogTitle>
           <AlertDialogDescription className="text-gray-400">
             This action cannot be undone. This will permanently delete the post.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-post-blue/30 text-white hover:bg-post-dark">
+          <AlertDialogCancel className="border-post-blue/30 text-white hover:bg-post-dark transform transition-all hover:shadow-[0_0_10px_rgba(30,174,219,0.3)]">
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={isDeleting}
-            className="bg-red-500 text-white hover:bg-red-600"
+            className="bg-red-500 text-white hover:bg-red-600 transform transition-all hover:shadow-[0_0_15px_rgba(255,0,0,0.5)]"
           >
             {isDeleting ? "Deleting..." : "Delete"}
           </AlertDialogAction>
