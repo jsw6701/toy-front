@@ -1,17 +1,19 @@
 
 import React, { useEffect, useState } from "react";
 import { PagingResponse, Post } from "@/types/post";
-import { fetchPosts } from "@/services/postService";
+import { fetchPosts, fetchPostDetail } from "@/services/postService";
 import Header from "@/components/Header";
 import PostGrid from "@/components/PostGrid";
 import Pagination from "@/components/Pagination";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [postsData, setPostsData] = useState<PagingResponse<Post> | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const postsPerPage = 9;
 
@@ -44,6 +46,11 @@ const Index = () => {
     });
   };
 
+  // Add handler for post click to navigate to post detail page
+  const handlePostClick = (post: Post) => {
+    navigate(`/post/${post.id}`);
+  };
+
   const totalPages = postsData
     ? Math.ceil(postsData.totalCount / postsPerPage)
     : 0;
@@ -73,6 +80,7 @@ const Index = () => {
         <PostGrid
           posts={postsData?.resultList || []}
           isLoading={isLoading}
+          onPostClick={handlePostClick}
         />
         
         {postsData && postsData.totalCount > 0 && (
