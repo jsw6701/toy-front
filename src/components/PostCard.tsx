@@ -2,7 +2,7 @@
 import { Post } from "@/types/post";
 import React, { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { ArrowRight, Edit, Trash2, Lock, LockOpen } from "lucide-react";
+import { Edit, Trash2, Lock, LockOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DeletePostButton from "./DeletePostButton";
 
@@ -13,7 +13,6 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted, onPostClick }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -28,8 +27,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted, onPostClick })
     }
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCardClick = () => {
     onPostClick(post);
   };
 
@@ -48,9 +46,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted, onPostClick })
       className={`post-card group transition-all duration-500 ${isOpen ? 'door-open' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleCardClick}
       style={{
         transformStyle: "preserve-3d",
-        boxShadow: isHovered ? "0 20px 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(37, 99, 235, 0.3)" : "0 10px 20px rgba(0, 0, 0, 0.2)"
+        boxShadow: isHovered ? "0 20px 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(37, 99, 235, 0.3)" : "0 10px 20px rgba(0, 0, 0, 0.2)",
+        cursor: "pointer"
       }}
     >
       <div className="door-left"></div>
@@ -76,25 +76,15 @@ const PostCard: React.FC<PostCardProps> = ({ post, onPostDeleted, onPostClick })
           {post.content}
         </p>
         
-        <div className="flex gap-4 mt-6">
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              handleClick(e);
-            }} 
-            className="px-4 py-2 bg-primary/80 text-white rounded-lg hover:bg-primary transition-all duration-300"
-          >
-            View Details
-          </button>
-          
+        <div className="flex justify-end gap-3 mt-6">
           <button 
             onClick={(e) => {
               e.stopPropagation();
               handleEdit(e);
             }} 
-            className="px-4 py-2 bg-primary/20 text-white rounded-lg hover:bg-primary/40 transition-all duration-300"
+            className="h-10 px-4 py-2 bg-primary/20 text-white rounded-lg hover:bg-primary/40 transition-all duration-300 flex items-center"
           >
-            <Edit size={16} className="inline mr-2" />
+            <Edit size={16} className="mr-2" />
             Edit
           </button>
           

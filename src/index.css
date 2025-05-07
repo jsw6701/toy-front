@@ -106,7 +106,7 @@
   }
   
   .door-left, .door-right {
-    @apply absolute top-0 h-full w-1/2 bg-secondary texture-dots transition-transform duration-800 ease-cubic z-10;
+    @apply absolute top-0 h-full w-1/2 bg-secondary transition-transform duration-800 ease-cubic z-10;
   }
   
   .door-left {
@@ -169,20 +169,6 @@
     @apply opacity-20;
   }
 
-  .texture-dots {
-    background-image: url('https://cdn.prod.website-files.com/61ba0d8d68d959d09b491aa4/632c8d7ea1166b01587787ce_card-dots.png');
-    background-size: 150px;
-    background-repeat: repeat;
-    opacity: 0.2;
-  }
-  
-  .header-dots {
-    background-image: url('https://cdn.prod.website-files.com/61ba0d8d68d959d09b491aa4/632c8d7e710706a7d835765a_device-dots.png');
-    background-size: 40px;
-    background-repeat: repeat;
-    opacity: 0.4;
-  }
-  
   .social-icon {
     @apply w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-1;
   }

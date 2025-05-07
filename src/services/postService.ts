@@ -46,14 +46,15 @@ export const fetchPosts = async (
 
 export const fetchPostDetail = async (postId: number): Promise<Post> => {
   try {
+    // Always use GET for fetching post details - this is important!
     const response = await fetch(
-        `http://localhost:8080/api/v1/post/detail?postId=${postId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          }
+      `${API_BASE_URL}/detail?postId=${postId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         }
+      }
     );
 
     if (!response.ok) {

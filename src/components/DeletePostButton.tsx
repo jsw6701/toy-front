@@ -61,13 +61,13 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, onSuccess }
       <AlertDialogTrigger asChild>
         <Button 
           variant="outline" 
-          className="relative overflow-hidden border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 transform transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,0,0.5)] z-10 before:content-[''] before:absolute before:-z-10 before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:to-red-500/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
+          className="h-10 relative overflow-hidden border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,0,0.5)] z-10 before:content-[''] before:absolute before:-z-10 before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:to-red-500/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity flex items-center"
         >
           <Trash2 className="w-4 h-4 mr-2" />
-          Delete Post
+          Delete
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-post-darker border-post-blue/30 shadow-[0_0_25px_rgba(30,174,219,0.3)] transform transition-all">
+      <AlertDialogContent className="bg-card border-primary/30 shadow-[0_0_25px_rgba(37,99,235,0.3)] transform transition-all">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-white text-xl">Are you sure?</AlertDialogTitle>
           <AlertDialogDescription className="text-gray-400">
@@ -75,13 +75,13 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, onSuccess }
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-post-blue/30 text-white hover:bg-post-dark transform transition-all hover:shadow-[0_0_10px_rgba(30,174,219,0.3)]">
+          <AlertDialogCancel className="border-primary/30 text-white hover:bg-secondary transform transition-all hover:shadow-[0_0_10px_rgba(37,99,235,0.3)]">
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={isDeleting}
-            className="bg-red-500 text-white hover:bg-red-600 transform transition-all hover:shadow-[0_0_15px_rgba(255,0,0,0.5)]"
+            className="bg-red-500 h-10 text-white hover:bg-red-600 transform transition-all hover:shadow-[0_0_15px_rgba(255,0,0,0.5)]"
           >
             {isDeleting ? "Deleting..." : "Delete"}
           </AlertDialogAction>

@@ -86,25 +86,8 @@ const Posts: React.FC = () => {
   };
 
   const handlePostClick = async (post: Post) => {
-    // Check if the post is already open in a tab
-    if (openPosts.some(p => p.id === post.id)) {
-      setActivePostId(post.id);
-      return;
-    }
-
-    try {
-      // Fetch full post details
-      const postDetail = await fetchPostDetail(post.id);
-      
-      // Add the post to open tabs and set it as active
-      setOpenPosts(prev => [...prev, postDetail]);
-      setActivePostId(post.id);
-    } catch (error) {
-      console.error("Failed to fetch post details:", error);
-      toast.error("포스트 상세 정보를 불러오는데 실패했습니다.", {
-        position: "bottom-right"
-      });
-    }
+    // Navigate directly to post detail page when clicking a post
+    navigate(`/post/${post.id}`);
   };
 
   const handleTabChange = (postId: number | null) => {
@@ -128,7 +111,6 @@ const Posts: React.FC = () => {
   return (
     <MainLayout>
       <div className="min-h-screen pb-16 relative perspective-1000">
-        <div className="absolute inset-0 opacity-20 rotate-3d texture-dots"></div>
         
         <div className="absolute top-5 right-5 md:top-10 md:right-10">
           <button 
@@ -147,7 +129,7 @@ const Posts: React.FC = () => {
               <h2 className="text-2xl font-medium text-white">Latest Posts</h2>
               <div className="flex items-center gap-4">
                 <Button 
-                  className="bg-emerald-500 text-white hover:bg-emerald-500/90 flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform transition-all duration-300"
+                  className="bg-emerald-500 text-white hover:bg-emerald-500/90 flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform transition-all duration-300 h-10"
                   onClick={() => navigate("/post/create")}
                 >
                   <Plus className="w-4 h-4" />
@@ -168,24 +150,14 @@ const Posts: React.FC = () => {
             </div>
           </div>
           
-          <TabPostView 
-            openPosts={openPosts}
-            activePostId={activePostId}
-            onTabChange={handleTabChange}
-            onCloseTab={handleCloseTab}
+          <PostGrid
+            posts={postsData?.resultList || []}
+            isLoading={isLoading}
             onPostDeleted={refreshPosts}
+            onPostClick={handlePostClick}
           />
           
-          {(!activePostId || activePostId === null) && (
-            <PostGrid
-              posts={postsData?.resultList || []}
-              isLoading={isLoading}
-              onPostDeleted={refreshPosts}
-              onPostClick={handlePostClick}
-            />
-          )}
-          
-          {postsData && postsData.totalCount > 0 && !activePostId && (
+          {postsData && postsData.totalCount > 0 && (
             <div className="mt-12">
               <Pagination
                 currentPage={currentPage}
