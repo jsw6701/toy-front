@@ -3,7 +3,7 @@ import React from "react";
 import { Post } from "@/types/post";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PostDetail from "@/components/PostDetailContent";
-import { X } from "lucide-react";
+import { X, FolderOpen, Folder } from "lucide-react";
 
 interface TabPostViewProps {
   openPosts: Post[];
@@ -28,19 +28,24 @@ const TabPostView: React.FC<TabPostViewProps> = ({
       onValueChange={(value) => onTabChange(value === "home" ? null : parseInt(value))}
       className="w-full mt-6 perspective-1000"
     >
-      <TabsList className="mb-4 bg-post-darker/50 border border-post-blue/20 overflow-x-auto flex-nowrap whitespace-nowrap max-w-full pr-2 transform-style-3d shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+      <TabsList className="mb-4 bg-card/50 border border-primary/20 overflow-x-auto flex-nowrap whitespace-nowrap max-w-full pr-2 transform-style-3d shadow-[0_5px_15px_rgba(0,0,0,0.3)] header-dots">
         <TabsTrigger
           value="home"
-          className="data-[state=active]:bg-post-blue/20 data-[state=active]:text-post-yellow data-[state=active]:neon-text gap-2 transform-style-3d transition-transform hover:translate-z-2"
+          className="data-[state=active]:bg-primary/20 data-[state=active]:text-blue-400 gap-2 transform-style-3d transition-transform hover:translate-z-2"
         >
-          Home
+          {activePostId === null ? (
+            <FolderOpen size={16} className="text-blue-400" />
+          ) : (
+            <Folder size={16} />
+          )}
+          <span>Home</span>
         </TabsTrigger>
         
         {openPosts.map((post) => (
           <TabsTrigger
             key={post.id}
             value={post.id.toString()}
-            className="data-[state=active]:bg-post-blue/20 data-[state=active]:text-post-yellow data-[state=active]:neon-text relative group transform-style-3d transition-transform hover:translate-z-2"
+            className="data-[state=active]:bg-primary/20 data-[state=active]:text-blue-400 relative group transform-style-3d transition-transform hover:translate-z-2"
           >
             <span className="truncate max-w-[150px] block">{post.title}</span>
             <button

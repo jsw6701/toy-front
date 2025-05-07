@@ -18,6 +18,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { useNavigate } from "react-router-dom";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -26,14 +27,15 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [activeTab, setActiveTab] = useState("posts");
   const [expanded, setExpanded] = useState(true);
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-post-dark overflow-hidden relative perspective-1000">
+    <div className="min-h-screen overflow-hidden relative perspective-1000">
       <div className="absolute inset-0 grid-bg opacity-20 rotate-3d"></div>
       
       {/* Main Header Area */}
       <div className="container mx-auto px-4 py-6 relative z-10">
-        <div className="bg-post-darker/60 rounded-xl border border-[#324da0]/30 shadow-[0_5px_20px_rgba(0,0,0,0.3)] transform-style-3d p-4 mb-6">
+        <div className="bg-card/80 rounded-xl border border-primary/30 shadow-[0_5px_20px_rgba(0,0,0,0.3)] transform-style-3d p-4 mb-6">
           {/* Folder Tabs */}
           <div className="flex items-center mb-4">
             <button 
@@ -45,16 +47,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             
             <Tabs 
               value={activeTab} 
-              onValueChange={setActiveTab}
+              onValueChange={(value) => {
+                setActiveTab(value);
+                if (value === "posts") {
+                  navigate("/posts");
+                }
+              }}
               className="transition-all duration-300"
             >
-              <TabsList className="bg-post-blue/10 border border-post-blue/20 p-1 h-auto">
+              <TabsList className="bg-primary/10 border border-primary/20 p-1 h-auto">
                 <TabsTrigger 
                   value="posts" 
-                  className="flex items-center gap-2 data-[state=active]:bg-post-blue/30 px-4 py-2 text-sm"
+                  className="flex items-center gap-2 data-[state=active]:bg-primary/30 px-4 py-2 text-sm"
                 >
                   {activeTab === "posts" ? 
-                    <FolderOpen size={18} className="text-post-yellow" /> : 
+                    <FolderOpen size={18} className="text-blue-400" /> : 
                     <Folder size={18} />
                   }
                   <span>Posts</span>
@@ -68,15 +75,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <div className="ml-auto">
               <Menubar className="bg-transparent border-0 p-0">
                 <MenubarMenu>
-                  <MenubarTrigger className="font-normal text-white opacity-70 hover:opacity-100 hover:bg-post-blue/20 data-[state=open]:bg-post-blue/30">
+                  <MenubarTrigger className="font-normal text-white opacity-70 hover:opacity-100 hover:bg-primary/20 data-[state=open]:bg-primary/30">
                     Options
                   </MenubarTrigger>
-                  <MenubarContent className="bg-post-darker border-post-blue/30">
-                    <MenubarItem className="cursor-pointer">
+                  <MenubarContent className="bg-card border-primary/30">
+                    <MenubarItem 
+                      className="cursor-pointer"
+                      onClick={() => navigate("/post/create")}
+                    >
                       New Post
                     </MenubarItem>
                     <MenubarSeparator />
-                    <MenubarItem className="cursor-pointer">
+                    <MenubarItem 
+                      className="cursor-pointer"
+                      onClick={() => window.location.reload()}
+                    >
                       Refresh
                     </MenubarItem>
                   </MenubarContent>
@@ -87,25 +100,25 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           
           {/* Navigation Sub-menu */}
           {expanded && (
-            <div className="animate-fade-in pt-2 pb-2 border-t border-[#324da0]/20">
+            <div className="animate-fade-in pt-2 pb-2 border-t border-primary/20">
               <NavigationMenu className="max-w-none justify-start">
                 <NavigationMenuList className="gap-2">
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="bg-transparent hover:bg-post-blue/20 text-white font-normal px-3 py-1.5 h-auto">
+                    <NavigationMenuTrigger className="bg-transparent hover:bg-primary/20 text-white font-normal px-3 py-1.5 h-auto">
                       View
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-post-darker border-post-blue/30">
+                    <NavigationMenuContent className="bg-card border-primary/30">
                       <ul className="grid w-48 p-2 gap-1">
                         <li>
                           <NavigationMenuLink asChild>
-                            <button className="w-full text-left rounded p-2 hover:bg-post-blue/20 text-sm">
+                            <button className="w-full text-left rounded p-2 hover:bg-primary/20 text-sm">
                               Grid View
                             </button>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <button className="w-full text-left rounded p-2 hover:bg-post-blue/20 text-sm">
+                            <button className="w-full text-left rounded p-2 hover:bg-primary/20 text-sm">
                               List View
                             </button>
                           </NavigationMenuLink>
@@ -115,21 +128,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   </NavigationMenuItem>
                   
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="bg-transparent hover:bg-post-blue/20 text-white font-normal px-3 py-1.5 h-auto">
+                    <NavigationMenuTrigger className="bg-transparent hover:bg-primary/20 text-white font-normal px-3 py-1.5 h-auto">
                       Sort
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-post-darker border-post-blue/30">
+                    <NavigationMenuContent className="bg-card border-primary/30">
                       <ul className="grid w-48 p-2 gap-1">
                         <li>
                           <NavigationMenuLink asChild>
-                            <button className="w-full text-left rounded p-2 hover:bg-post-blue/20 text-sm">
+                            <button className="w-full text-left rounded p-2 hover:bg-primary/20 text-sm">
                               Newest First
                             </button>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <button className="w-full text-left rounded p-2 hover:bg-post-blue/20 text-sm">
+                            <button className="w-full text-left rounded p-2 hover:bg-primary/20 text-sm">
                               Oldest First
                             </button>
                           </NavigationMenuLink>

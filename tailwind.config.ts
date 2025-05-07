@@ -67,16 +67,6 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
-        post: {
-          violet: '#9b87f5',
-          purple: '#7E69AB',
-          light: '#D6BCFA',
-          blue: '#1EAEDB',
-          yellow: '#FFB921',
-          gray: '#8E9196',
-          dark: '#1C1D2A',
-          darker: '#212947',
-        }
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -113,8 +103,8 @@ export default {
           '100%': { transform: 'translateY(0)', opacity: '1' }
         },
         'pulse-button': {
-          '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 20px rgba(255, 185, 33, 0.5)' },
-          '50%': { transform: 'scale(1.05)', boxShadow: '0 0 30px rgba(255, 185, 33, 0.7)' }
+          '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 20px rgba(16, 185, 129, 0.5)' },
+          '50%': { transform: 'scale(1.05)', boxShadow: '0 0 30px rgba(16, 185, 129, 0.7)' }
         }
       },
       animation: {
@@ -130,16 +120,17 @@ export default {
       boxShadow: {
         'card': '0 4px 20px rgba(0, 0, 0, 0.1)',
         'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
-        'button': '0 0 15px rgba(255, 185, 33, 0.5)',
-        '3d': '0 10px 30px rgba(0, 0, 0, 0.2), 0 0 30px rgba(30, 174, 219, 0.2)'
+        'button': '0 0 15px rgba(16, 185, 129, 0.5)',
+        '3d': '0 10px 30px rgba(0, 0, 0, 0.2), 0 0 30px rgba(37, 99, 235, 0.2)'
       },
       backgroundImage: {
-        'gradient-post': 'linear-gradient(135deg, #324da0 0%, #1EAEDB 100%)',
-        'gradient-soft': 'linear-gradient(135deg, #D6BCFA 0%, #9b87f5 100%)',
-        'grid-pattern': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMWMxZDJhIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMyNDI3MzkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=')",
+        'gradient-post': 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
       },
       transitionProperty: {
         'transform': 'transform',
+      },
+      transitionDuration: {
+        '800': '800ms',
       }
     }
   },

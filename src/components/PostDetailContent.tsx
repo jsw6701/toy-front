@@ -25,18 +25,18 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, onPostDeleted }) => {
   };
 
   return (
-    <div className="card-border p-8 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.2),_0_0_30px_rgba(30,174,219,0.2)] animate-scale-in transform translate-z-20 hover:translate-z-25 transition-transform duration-500 bg-post-darker/70">
+    <div className="card-border p-8 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.2),_0_0_30px_rgba(37,99,235,0.2)] animate-scale-in transform translate-z-20 hover:translate-z-25 transition-transform duration-500 bg-card/70">
       <div className="space-y-8 transform-style-3d">
-        <h1 className="text-3xl md:text-4xl font-bold text-white transform translate-z-10">
-          <span className="text-post-yellow neon-text">{post.title}</span>
+        <h1 className="text-3xl md:text-4xl font-bold transform translate-z-10">
+          <span className="text-blue-400">{post.title}</span>
         </h1>
         
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground transform translate-z-5">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 post-date">
             <User size={14} />
             <span>{post.creatorCd || 'Unknown'}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 post-date">
             <Clock size={14} />
             <span>{post.createdAt ? formatDate(post.createdAt) : 'Unknown date'}</span>
           </div>
@@ -45,7 +45,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, onPostDeleted }) => {
         <div className="flex gap-4 transform translate-z-15">
           <Button 
             onClick={() => navigate(`/post/edit/${post.id}`)}
-            className="bg-post-blue text-white hover:bg-post-blue/80 shadow-[0_0_15px_rgba(30,174,219,0.3)] hover:shadow-[0_0_20px_rgba(30,174,219,0.5)] transform transition-all duration-300 hover:scale-105"
+            className="bg-primary text-white hover:bg-primary/80 shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] transform transition-all duration-300 hover:scale-105"
           >
             <Edit className="w-4 h-4 mr-2" />
             Edit Post
@@ -64,6 +64,11 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, onPostDeleted }) => {
             {post.content}
           </p>
         </article>
+        
+        <div className="flex flex-wrap gap-2 mt-6">
+          <span className="tag">#{post.creatorCd}</span>
+          <span className="tag">#post-{post.id}</span>
+        </div>
       </div>
     </div>
   );

@@ -128,23 +128,26 @@ const Posts: React.FC = () => {
   return (
     <MainLayout>
       <div className="min-h-screen pb-16 relative perspective-1000">
-        <div className="absolute inset-0 grid-bg opacity-20 rotate-3d"></div>
+        <div className="absolute inset-0 opacity-20 rotate-3d texture-dots"></div>
         
         <div className="absolute top-5 right-5 md:top-10 md:right-10">
-          <button className="animated-button w-10 h-10 md:w-12 md:h-12 z-10 transform hover:rotate-12 transition-all duration-300">
-            <Power className="w-5 h-5 md:w-6 md:h-6 text-post-dark" />
+          <button 
+            className="animated-button w-10 h-10 md:w-12 md:h-12 z-10 transform hover:rotate-12 transition-all duration-300"
+            onClick={() => navigate("/")}
+          >
+            <Power className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
         </div>
         
         <Header />
         
         <main className="container mx-auto px-4 relative z-10 transform-style-3d">
-          <div className="pb-4 mb-6 border-b border-[#324da0]/30 hover:border-[#324da0]/60 transition-all duration-300">
+          <div className="pb-4 mb-6 border-b border-primary/30 hover:border-primary/60 transition-all duration-300">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-medium text-white neon-text-blue">Latest Posts</h2>
+              <h2 className="text-2xl font-medium text-white">Latest Posts</h2>
               <div className="flex items-center gap-4">
                 <Button 
-                  className="bg-post-yellow text-post-dark hover:bg-post-yellow/90 flex items-center gap-2 shadow-[0_0_15px_rgba(255,185,33,0.3)] hover:shadow-[0_0_20px_rgba(255,185,33,0.5)] transform transition-all duration-300"
+                  className="bg-emerald-500 text-white hover:bg-emerald-500/90 flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform transition-all duration-300"
                   onClick={() => navigate("/post/create")}
                 >
                   <Plus className="w-4 h-4" />
@@ -154,8 +157,8 @@ const Posts: React.FC = () => {
                   {postsData ? (
                     <span>
                       Showing{" "}
-                      <span className="font-medium text-post-yellow neon-text">{postsData.resultList.length}</span> of{" "}
-                      <span className="font-medium text-post-yellow neon-text">{postsData.totalCount}</span> posts
+                      <span className="font-medium text-blue-400">{postsData.resultList.length}</span> of{" "}
+                      <span className="font-medium text-blue-400">{postsData.totalCount}</span> posts
                     </span>
                   ) : (
                     <span>&nbsp;</span>

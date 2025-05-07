@@ -26,15 +26,13 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading, onPostDeleted, on
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:grid-masonry perspective-1000">
+    <div className="grid grid-cols-1 gap-6 perspective-1000">
       {posts.map((post, index) => (
         <div 
           key={post.id} 
           className="animate-fade-in"
           style={{ 
             animationDelay: `${index * 0.05}s`,
-            transform: `translateZ(${index % 3 * 5}px)`,
-            transformStyle: "preserve-3d"
           }}
         >
           <PostCard 
