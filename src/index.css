@@ -74,6 +74,16 @@
   }
 }
 
+@layer utilities {
+  .ease-cubic {
+    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+  }
+  
+  .duration-800 {
+    transition-duration: 800ms;
+  }
+}
+
 @layer components {
   .post-card {
     @apply relative bg-card/70 rounded-xl shadow-md hover:shadow-xl transition-all duration-500 ease-out border border-border/20 overflow-hidden;
@@ -96,7 +106,7 @@
   }
   
   .door-left, .door-right {
-    @apply absolute top-0 h-full w-1/2 bg-secondary texture-dots transition-transform duration-800 ease-[cubic-bezier(0.86,0,0.07,1)] z-10;
+    @apply absolute top-0 h-full w-1/2 bg-secondary texture-dots transition-transform duration-800 ease-cubic z-10;
   }
   
   .door-left {
@@ -298,12 +308,4 @@
 
 .text-gradient {
   @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
-}
-
-.duration-800 {
-  transition-duration: 800ms;
-}
-
-.ease-cubic {
-  transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
 }

@@ -26,7 +26,7 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, isLoading, onPostDeleted, on
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 perspective-1000">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 perspective-1000">
       {posts.map((post, index) => (
         <div 
           key={post.id} 
